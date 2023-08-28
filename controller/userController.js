@@ -18,12 +18,12 @@ const todoFunction = (req, res) => {
         gender,
         phonenumber,
         courses,
-        // profilepicture,
         department,
         level,
         nationality,
         stateoforigin,
         address,
+        // profilepicture
 
     });
     newUser.save()
@@ -119,16 +119,20 @@ const profilepic = (req, res) => {
     console.log(id);
     cloudinary.v2.uploader.upload(myfile, { public_id: "project" },
         (error, result) => {
-            if (error) {
-                console.log(error);
-            } else {
-                if (result) {
-                    const profileURL = result.secure_url;
-                    userModel.findByIdAndUpdate(id, { $set: { profilepicture: profileURL } })
-                }
-                console.log(result)
-                res.status(200).json(result)
-            }
+            console.log(result.secure_url);
+            // if (error) {
+            //     console.log(error);
+            // } else {
+            //     if (result) {
+            //         const profileURL = result.secure_url;
+            //         console.log(profileURL);
+                    userModel.updateOne({ _id: id }, { $set: { profilepicture: result.secure_url } }).then (result => {
+                        console.log(result);
+                    })
+            //     }
+                // console.log(error)
+            //     res.status(200).json(result)
+            // }
         });
 
 
