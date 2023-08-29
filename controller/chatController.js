@@ -26,9 +26,15 @@ const mainChat = (req,res) => {
 }
 
 const sentChatMessage = (req,res) => {
-    const chatuser = req.body;
-    const data = new chatModel(chatuser)
-    data.save()
+    const { from, to } = req.params;
+    const { chatuser,sender, message } = req.body
+
+    const newChatMessage = new chatModel({
+        chatuser,
+        sender,
+        message,
+    })
+    newChatMessage.save()
     .then((result) => {
         // console.log(result);
         res.status(200).json(result);
@@ -39,5 +45,25 @@ const sentChatMessage = (req,res) => {
     })
 }
 
+const getChatMessage = (req, res) => {
+    const { from, to } = req.params;
+  
+    chatModel
+      .find({
+        $or: [
+          { chatuser: [from, to] },
+          { chatuser: [to, from] }
+        ]
+      })
+      .then((result) => {
+        console.log(result);
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ error: "Error fetching chat messages" });
+      });
+  };
+  
 
-module.exports =  { chatList, mainChat, sentChatMessage }
+module.exports =  { chatList, mainChat, sentChatMessage, getChatMessage }
