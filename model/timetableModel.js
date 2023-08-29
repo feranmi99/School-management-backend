@@ -29,6 +29,10 @@ const timetableSchema = new mongoose.Schema({
         type:String,
         require:true,
     },
+    users:{
+        type:String,
+        require:true,
+    },
 },{timestamps:true});
 
 const timetableModel = mongoose.model('timetableSchema', timetableSchema);
