@@ -35,6 +35,26 @@ const timetableSchema = new mongoose.Schema({
     },
 },{timestamps:true});
 
-const timetableModel = mongoose.model('timetableSchema', timetableSchema);
+const todoSchema = mongoose.Schema({
+    item:{
+        type:String,
+        require:true,
+    },
+    time:{
+        type:String,
+        require:true,
+    },
+    date:{
+        type:String,
+        require:true,
+    },
+    users:{
+        type:String,
+        require:true,
+    },
+},{timestamps:true})
 
-module.exports = timetableModel;
+const timetableModel = mongoose.model('timetableSchema', timetableSchema);
+const todoModel = mongoose.model('todoSchema', todoSchema);
+
+module.exports = { timetableModel, todoModel };
