@@ -53,10 +53,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // matricnumber:{
-    //     type: Number,
-    //     required: true
-    // },
+    matrinumber:{
+        type: Number,
+        required: true
+    },
     profilepicture:{
         type: String,
         default: ''

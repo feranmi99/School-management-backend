@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 const todoFunction = (req, res) => {
-    const { firstname, lastname, email, password, gender, address, nationality, phonenumber, stateoforigin, courses, department, level } = req.body;
+    const { firstname, lastname, email, password, gender, address, nationality, phonenumber, stateoforigin, courses, department, level, matrinumber } = req.body;
 
     const newUser = new userModel({
         firstname,
@@ -23,7 +23,7 @@ const todoFunction = (req, res) => {
         nationality,
         stateoforigin,
         address,
-        // profilepicture
+        matrinumber,
 
     });
     newUser.save()
