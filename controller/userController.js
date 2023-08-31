@@ -117,8 +117,10 @@ const profilepic = (req, res) => {
     let myfile = req.body.myfile;
     let id = req.body._id
     console.log(id);
-    cloudinary.v2.uploader.upload(myfile, { public_id: "project" },
+    cloudinary.v2.uploader.upload(myfile, { public_id: id },
         (error, result) => {
+            console.log(resuit);
+            console.log(error);
             console.log(result.secure_url);
             // if (error) {
             //     console.log(error);
