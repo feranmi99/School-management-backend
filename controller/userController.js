@@ -49,7 +49,7 @@ const todoFunction = (req, res) => {
 //                 })
 //                 res.status(200).json(result)
 //             } else {
-                
+
 //             }
 
 //         })
@@ -67,13 +67,13 @@ const dataFunction = (req, res) => {
             if (!result) {
                 return res.status(404).json({ message: 'User not found' });
             }
-            
+
             result.validatepassword(password, (err, isMatch) => {
                 if (err) {
                     console.log(err);
                     return res.status(500).json({ message: 'Server error' });
                 }
-                
+
                 if (isMatch) {
                     res.status(200).json(result);
                 } else {
@@ -113,31 +113,48 @@ const getProfile = (req, res) => {
             console.log(err);
         })
 }
+// const profilepic = (req, res) => {
+//     let myfile = req.body.myfile;
+//     let id = req.body._id
+//     console.log(id);
+//     cloudinary.v2.uploader.upload(myfile, { public_id: id }
+//     ).then((result) => {
+//         console.log(result);
+//         console.log(result.secure_url)
+//         userModel.updateOne({ _id: id }, { $set: { profilepicture: result.secure_url } }).then(result => {
+//             console.log(result);
+//         })
+//     }).catch((error) => {
+//         console.log(error);
+//     })
+// }
+
 const profilepic = (req, res) => {
-    let myfile = req.body.myfile;
-    let id = req.body._id
+    const myfile = req.body.myfile;
+    const id = req.body._id;
+
     console.log(id);
-    cloudinary.v2.uploader.upload(myfile, { public_id: id },
-        (error, result) => {
-            console.log(resuit);
-            console.log(error);
+
+    cloudinary.v2.uploader.upload(myfile, { public_id: id })
+        .then((result) => {
+            console.log(result);
             console.log(result.secure_url);
-            // if (error) {
-            //     console.log(error);
-            // } else {
-            //     if (result) {
-            //         const profileURL = result.secure_url;
-            //         console.log(profileURL);
-                    userModel.updateOne({ _id: id }, { $set: { profilepicture: result.secure_url } }).then (result => {
-                        console.log(result);
-                    })
-            //     }
-                // console.log(error)
-            //     res.status(200).json(result)
-            // }
+
+            userModel.updateOne({ _id: id }, { $set: { profilepicture: result.secure_url } })
+                .then(() => {
+                    console.log("profile picture upload successfully.");
+                    res.status(200).json({ message: "Profile picture upload successfully." });
+                })
+                .catch((updateError) => {
+                    console.log("Error updating user profile picture:", updateError);
+                    res.status(500).json({ error: "An error occurred while updating the profile picture." });
+                });
+        })
+        .catch((uploadError) => {
+            console.log("Error uploading profile picture to Cloudinary:", uploadError);
+            res.status(500).json({ error: "An error occurred while uploading the profile picture." });
         });
+};
 
-
-}
 
 module.exports = { todoFunction, getFunction, dataFunction, getProfile, profilepic };
