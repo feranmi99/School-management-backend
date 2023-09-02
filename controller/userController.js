@@ -1,12 +1,18 @@
 const userModel = require("../model/userModel");
 const cloudinary = require('cloudinary')
 
-cloudinary.config({
-    cloud_name: process.env.CLOUD_NAME,
-    api_key: process.env.API_KEY,
-    api_secret: process.env.API_SECRET
+// cloudinary.config({
+//     cloud_name: process.env.CLOUD_NAME,
+//     api_key: process.env.API_KEY,
+//     api_secret: process.env.API_SECRET
+// });
+// import {v2 as cloudinary} from 'cloudinary';
+          
+cloudinary.config({ 
+  cloud_name: 'dvq4xeg1s', 
+  api_key: '973981513565751', 
+  api_secret: 'P6_z1xe7VMGnaUmSDL1YC2nlt7A' 
 });
-
 const todoFunction = (req, res) => {
     const { firstname, lastname, email, password, gender, address, nationality, phonenumber, stateoforigin, courses, department, level, matrinumber, condition } = req.body;
 
@@ -25,6 +31,7 @@ const todoFunction = (req, res) => {
         address,
         matrinumber,
         condition,
+        profilepicture,
 
     });
     newUser.save()
@@ -72,11 +79,11 @@ const dataFunction = (req, res) => {
             result.validatepassword(password, (err, isMatch) => {
                 if (err) {
                     console.log(err);
-                    return res.status(500).json({ message: 'Server error' });
+                    return res.status(500).json({ message: 'please check internet connection' });
                 }
 
                 if (isMatch) {
-                    res.status(200).json(result);
+                    res.status(200).json( { message: '✔ Sign up successfully',result});
                 } else {
                     res.status(401).json({ message: 'Authentication failed' });
                 }
@@ -84,7 +91,7 @@ const dataFunction = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            res.status(500).json({ message: 'Server error' });
+            res.status(500).json({ message: 'please check internet connection' });
         });
 };
 
@@ -130,21 +137,46 @@ const getProfile = (req, res) => {
 //     })
 // }
 
+// const profilepic = (req, res) => {
+//     const myfile = req.body.myfile;
+//     const id = req.body._id;
+
+//     console.log(id);
+
+//     cloudinary.v2.uploader.upload(myfile, { public_id: id })
+//         .then((result) => {
+//             console.log(result);
+//             console.log(result.secure_url);
+
+//             userModel.updateOne({ _id: id }, { $set: { profilepicture: result.secure_url } })
+//                 .then(() => {
+//                     console.log("profile picture upload successfully.");
+//                     res.status(200).json({ message: "Profile picture upload successfully." });
+//                 })
+//                 .catch((updateError) => {
+//                     console.log("Error updating user profile picture:", updateError);
+//                     res.status(500).json({ error: "An error occurred while updating the profile picture." });
+//                 });
+//         })
+//         .catch((uploadError) => {
+//             console.log("Error uploading profile picture to Cloudinary:", uploadError);
+//             res.status(500).json({ error: "An error occurred while uploading the profile picture." });
+//         });
+// };
+
 const profilepic = (req, res) => {
     const myfile = req.body.myfile;
     const id = req.body._id;
 
-    console.log(id);
-
-    cloudinary.v2.uploader.upload(myfile, { public_id: id })
+    cloudinary.v2.uploader.upload(myfile, { public_id: id})
         .then((result) => {
             console.log(result);
             console.log(result.secure_url);
 
             userModel.updateOne({ _id: id }, { $set: { profilepicture: result.secure_url } })
                 .then(() => {
-                    console.log("profile picture upload successfully.");
-                    res.status(200).json({ message: "Profile picture upload successfully." });
+                    console.log("Profile picture upload successful.");
+                    res.status(200).json({ message: "Profile picture upload successful." });
                 })
                 .catch((updateError) => {
                     console.log("Error updating user profile picture:", updateError);
