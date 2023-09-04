@@ -34,7 +34,8 @@ mongoose.connect(URI).then(() => {
 //     api_secret: process.env.API_SECRET
 // });
 
-app.post('/users', (req, res) => {
+app.post('/', (req, res) => {
+    res.send('king feranmi-titus')
     console.log(req);
 })
 
@@ -57,3 +58,4 @@ io.on('connection', (socket) => {
     //     console.log('user disconnected');
     // })
 })
+
