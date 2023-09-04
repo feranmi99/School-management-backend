@@ -34,7 +34,7 @@ mongoose.connect(URI).then(() => {
 //     api_secret: process.env.API_SECRET
 // });
 
-app.post('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('king feranmi-titus')
     console.log(req);
 })
