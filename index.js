@@ -25,7 +25,7 @@ mongoose.connect(URI)
     })
 
 app.get('/', (req, res) => {
-    res.send('king feranmi-titus')
+    res.send('hello feranmi')
     console.log(req);
 })
 
