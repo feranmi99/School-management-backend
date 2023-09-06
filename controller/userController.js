@@ -31,7 +31,6 @@ const todoFunction = (req, res) => {
         address,
         matrinumber,
         condition,
-        profilepicture,
 
     });
     newUser.save()
