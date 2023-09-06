@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.post('/register', todoFunction);
-router.post('/rawData' , dataFunction);
+router.post('/signup', todoFunction);
+router.post('/login' , dataFunction);
 router.post('/profilepic' ,profilepic );
 router.get('/getPost/:_id', getFunction);
 router.get('/profile/:_id', getProfile);
