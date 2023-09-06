@@ -5,7 +5,7 @@ const cors = require("cors");
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const router = require('./routers');
-
+const socketClient = require('socket.io');
 dotenv.config()
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
@@ -15,6 +15,12 @@ let port = process.env.PORT;
 let URI = process.env.MONGO_URI
 
 app.use('/', router);
+
+const corsOptions = {
+    origin: 'https://eduportal-pro.vercel.app/', // Replace with your frontend URL
+  };
+  
+  app.use(cors(corsOptions));
 
 mongoose.connect(URI)
     .then(() => {
@@ -33,19 +39,19 @@ const connection = app.listen(port, () => {
     console.log(`server is running on port ${port}`);
 })
 
-const socketClient = require('socket.io')
+
 const io = socketClient(connection, {
     cors: { origin: "*" }
 })
 io.on('connection', (socket) => {
-    // console.log(socket.id); 
-    // console.log('a user connected');
+    // console.log(`User connected (Socket ID: ${socket.id})`);
     socket.on('sendMsg', (message) => {
-        console.log(message);
+        console.log(`Received message: ${message}`);
         io.emit('broadcastMsg', message)
     })
+    // Handle disconnections (commented out)
     // socket.on('disconnect', () => {
-    //     console.log('user disconnected');
-    // })
+    //   console.log(`User disconnected (Socket ID: ${socket.id})`);
+    // });
 })
 
