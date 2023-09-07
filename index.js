@@ -16,12 +16,6 @@ let URI = process.env.MONGO_URI
 
 app.use('/', router);
 
-// const corsOptions = {
-//     origin: 'https://eduportal-pro.vercel.app/', // Replace with your frontend URL
-//   };
-  
-//   app.use(cors(corsOptions));
-
 mongoose.connect(URI)
     .then(() => {
         console.log("mongoose has connected successfully");
@@ -30,10 +24,10 @@ mongoose.connect(URI)
         console.log(err);
     })
 
-app.get('/', (req, res) => {
-    res.send('hello feranmi')
-    console.log(req);
-})
+// app.get('/', (req, res) => {
+//     res.send('hello feranmi')
+//     console.log(req);
+// })
 
 const connection = app.listen(port, () => {
     console.log(`server is running on port ${port}`);
