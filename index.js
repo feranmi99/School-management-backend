@@ -16,11 +16,11 @@ let URI = process.env.MONGO_URI
 
 app.use('/', router);
 
-const corsOptions = {
-    origin: 'https://eduportal-pro.vercel.app/', // Replace with your frontend URL
-  };
+// const corsOptions = {
+//     origin: 'https://eduportal-pro.vercel.app/', // Replace with your frontend URL
+//   };
   
-  app.use(cors(corsOptions));
+//   app.use(cors(corsOptions));
 
 mongoose.connect(URI)
     .then(() => {
