@@ -9,7 +9,7 @@ const chatList = (req, res) => {
         }).catch((err) => {
             console.log(err);
         })
-}
+};
 
 const mainChat = (req, res) => {
     const { _id } = req.params;
@@ -23,17 +23,17 @@ const mainChat = (req, res) => {
         .catch((err) => {
             console.log(err);
         })
-}
+};
 
 const sentChatMessage = (req, res) => {
     const { from, to } = req.params;
-    const { chatuser, sender, message } = req.body
+    const { chatuser, sender, message } = req.body;
 
     const newChatMessage = new chatModel({
         chatuser,
         sender,
         message,
-    })
+    });
     newChatMessage.save()
         .then((result) => {
             // console.log(result);
@@ -43,7 +43,7 @@ const sentChatMessage = (req, res) => {
         .catch((err) => {
             console.log(err);
         })
-}
+};
 
 const getChatMessage = (req, res) => {
     const { from, to } = req.params;

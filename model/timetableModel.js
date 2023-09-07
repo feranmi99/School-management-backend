@@ -52,7 +52,7 @@ const todoSchema = mongoose.Schema({
         type:String,
         require:true,
     },
-},{timestamps:true})
+},{timestamps:true});
 
 const timetableModel = mongoose.model('timetableSchema', timetableSchema);
 const todoModel = mongoose.model('todoSchema', todoSchema);

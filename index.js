@@ -1,29 +1,21 @@
 const express = require('express');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const router = require('./routers');
 const socketClient = require('socket.io');
-dotenv.config()
+dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 
 let port = process.env.PORT;
-let URI = process.env.MONGO_URI
+let URI = process.env.MONGO_URI;
 
 app.use('/', router);
 
-// const corsOptions = {
-//     origin: 'http://localhost:5173',
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//     preflightContinue: false,
-//     optionsSuccessStatus: 204,
-//   };
-  
-//   app.use(cors(corsOptions));
 
 mongoose.connect(URI)
     .then(() => {
@@ -31,16 +23,16 @@ mongoose.connect(URI)
     })
     .catch((err) => {
         console.log(err);
-    })
+    });
 
-app.get('/', (req, res) => {
-    res.send('hello feranmi')
-    console.log(req);
-})
+// app.get('/', (req, res) => {
+//     res.send('hello feranmi')
+//     console.log(req);
+// })
 
 const connection = app.listen(port, () => {
     console.log(`server is running on port ${port}`);
-})
+});
 
 
 // const io = socketClient(connection, {
