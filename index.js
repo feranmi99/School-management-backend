@@ -16,6 +16,15 @@ let URI = process.env.MONGO_URI
 
 app.use('/', router);
 
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  };
+  
+  app.use(cors(corsOptions));
+
 mongoose.connect(URI)
     .then(() => {
         console.log("mongoose has connected successfully");
@@ -34,18 +43,18 @@ const connection = app.listen(port, () => {
 })
 
 
-const io = socketClient(connection, {
-    cors: { origin: "*" }
-})
-io.on('connection', (socket) => {
-    // console.log(`User connected (Socket ID: ${socket.id})`);
-    socket.on('sendMsg', (message) => {
-        console.log(`Received message: ${message}`);
-        io.emit('broadcastMsg', message)
-    })
-    // Handle disconnections (commented out)
-    // socket.on('disconnect', () => {
-    //   console.log(`User disconnected (Socket ID: ${socket.id})`);
-    // });
-})
+// const io = socketClient(connection, {
+//     cors: { origin: "*" }
+// })
+// io.on('connection', (socket) => {
+//     // console.log(`User connected (Socket ID: ${socket.id})`);
+//     socket.on('sendMsg', (message) => {
+//         console.log(`Received message: ${message}`);
+//         io.emit('broadcastMsg', message)
+//     })
+//     // Handle disconnections (commented out)
+//     // socket.on('disconnect', () => {
+//     //   console.log(`User disconnected (Socket ID: ${socket.id})`);
+//     // });
+// })
 
