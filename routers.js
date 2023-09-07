@@ -15,7 +15,7 @@ router.post('/profilepic' ,profilepic );
 router.get('/getPost/:_id', getFunction);
 router.get('/profile/:_id', getProfile);
 router.post('/attendance', postAttendan);
-router.get('/getattendance', getattendance);
+router.get('/getattendances', getattendance);
 router.get('/getChatUser', chatList);
 router.get('/myChat/:_id', mainChat);
 router.post('/updatedChatMessage/:from/:_id' ,sentChatMessage );
