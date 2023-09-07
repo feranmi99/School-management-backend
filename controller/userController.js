@@ -43,7 +43,9 @@ const todoFunction = (req, res) => {
         })
 };
 
-// const dataFunction = (req, res) => {
+const home = (req, res) => {
+    // res.status(200).json({ messa })
+    res.send('king titus')
 //     let { password } = req.body 
 //     userModel.findOne({
 //         email: req.body.email,
@@ -64,7 +66,7 @@ const todoFunction = (req, res) => {
 //         .catch((err) => {
 //             console.log(err); 
 //         })
-// }
+}
 
 
 const dataFunction = (req, res) => {
@@ -190,4 +192,4 @@ const profilepic = (req, res) => {
 };
 
 
-module.exports = { todoFunction, getFunction, dataFunction, getProfile, profilepic };
+module.exports = { todoFunction, getFunction, dataFunction, getProfile, profilepic, home };
