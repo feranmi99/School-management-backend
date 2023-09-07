@@ -71,7 +71,7 @@ const home = (req, res) => {
 
 const dataFunction = (req, res) => {
     const { email, password } = req.body;
-
+    console.log(email)
     userModel.findOne({ email })
         .then((result) => {
             if (!result) {
@@ -81,7 +81,7 @@ const dataFunction = (req, res) => {
             result.validatepassword(password, (err, isMatch) => {
                 if (err) {
                     console.log(err);
-                    return res.status(500).json({ message: 'please check internet connection' });
+                    return res.status(500).json({ message: 'Internal server error' });
                 }
 
                 if (isMatch) {
@@ -93,7 +93,7 @@ const dataFunction = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            res.status(500).json({ message: 'please check internet connection' });
+            res.status(500).json({ message: 'Internal server error' });
         });
 };
 

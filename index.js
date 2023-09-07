@@ -16,14 +16,14 @@ let URI = process.env.MONGO_URI
 
 app.use('/', router);
 
-const corsOptions = {
-    origin: 'http://localhost:5173',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  };
+// const corsOptions = {
+//     origin: 'http://localhost:5173',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     preflightContinue: false,
+//     optionsSuccessStatus: 204,
+//   };
   
-  app.use(cors(corsOptions));
+//   app.use(cors(corsOptions));
 
 mongoose.connect(URI)
     .then(() => {
@@ -33,10 +33,10 @@ mongoose.connect(URI)
         console.log(err);
     })
 
-// app.get('/', (req, res) => {
-//     res.send('hello feranmi')
-//     console.log(req);
-// })
+app.get('/', (req, res) => {
+    res.send('hello feranmi')
+    console.log(req);
+})
 
 const connection = app.listen(port, () => {
     console.log(`server is running on port ${port}`);
