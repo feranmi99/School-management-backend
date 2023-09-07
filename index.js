@@ -33,15 +33,10 @@ mongoose.connect(URI)
         console.log(err);
     })
 
-app.get('/getattendance', (req, res) => {
-    attendancemodel.find()
-    .then((resuit)=>{
-        console.log(resuit);
-        res.status(200).json(resuit)
-    }).catch((err)=>{
-        console.log(err);
-    })
-})
+// app.get('/', (req, res) => {
+//     res.send('hello feranmi')
+//     console.log(req);
+// })
 
 const connection = app.listen(port, () => {
     console.log(`server is running on port ${port}`);

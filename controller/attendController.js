@@ -13,13 +13,13 @@ const postAttendan = (req,res)=> {
 }
 
 const getattendance =  (req,res) => {
-    // attendancemodel.find()
-    // .then((resuit)=>{
-    //     console.log(resuit);
-    //     res.status(200).json(resuit)
-    // }).catch((err)=>{
-    //     console.log(err);
-    // })
+    attendancemodel.find()
+    .then((resuit)=>{
+        console.log(resuit);
+        res.status(200).json(resuit)
+    }).catch((err)=>{
+        console.log(err);
+    })
 
 }
 
