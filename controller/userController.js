@@ -73,6 +73,8 @@ const dataFunction = (req, res) => {
     const { email, password } = req.body;
     // console.log(email)
     console.log(req.body);
+    res.status(200).json(req.body);
+
     // userModel.findOne({ email })
     //     .then((result) => {
     //         if (!result) {
