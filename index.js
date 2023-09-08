@@ -9,7 +9,11 @@ const socketClient = require('socket.io');
 dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  }));
 app.use(express.json({ limit: "50mb" }));
 
 let port = process.env.PORT;
