@@ -123,6 +123,11 @@ const getProfile = (req, res) => {
             console.log(err);
         })
 }
+
+const getmany = (req, res) => {
+  res.send('https://school-management-backend-two.vercel.app you too much')
+}
+
 // const profilepic = (req, res) => {
 //     let myfile = req.body.myfile;
 //     let id = req.body._id

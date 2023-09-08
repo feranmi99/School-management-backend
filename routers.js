@@ -24,6 +24,7 @@ router.post('/posttimetable/:user', posttimetable);
 router.get('/gettimetable/:users', gettimetable);
 router.post('/postodo/:user', postodo);
 router.get('/gettodo/:users', gettodo);
+router.get('/getmany', gettodo);
 
 module.exports = router;
 
