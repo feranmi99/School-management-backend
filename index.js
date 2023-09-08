@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 const router = require('./routers');
 const socketClient = require('socket.io');
 dotenv.config();
+
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
 app.use(express.json({ limit: "50mb" }));
@@ -26,7 +27,7 @@ mongoose.connect(URI)
     });
 
 // app.get('/', (req, res) => {
-//     res.send('hello feranmi')
+//     res.send('hello feranmijkjkjk')
 //     console.log(req);
 // })
 
