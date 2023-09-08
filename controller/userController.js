@@ -197,4 +197,4 @@ const profilepic = (req, res) => {
 };
 
 
-module.exports = { todoFunction, getFunction, dataFunction, getProfile, profilepic, home };
+module.exports = { todoFunction, getFunction, dataFunction, getProfile, profilepic, home, getmany };
