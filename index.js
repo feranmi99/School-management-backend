@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
     // console.log(`User connected (Socket ID: ${socket.id})`);
     socket.on('sendMsg', (message) => {
         console.log(`Received message: ${message}`);
-        io.emit('broadcastMsg', message)
+        io.emit('broadcastMsg',message)
     })
     // Handle disconnections (commented out)
     // socket.on('disconnect', () => {

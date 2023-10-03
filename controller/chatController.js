@@ -25,9 +25,11 @@ const mainChat = (req, res) => {
         })
 };
 
-const sentChatMessage = (req, res) => {
+const sentChatMessage = async(req, res) => {
     const { from, to } = req.params;
     const { chatuser, sender, message } = req.body;
+
+    // await chatModel.deleteMany()
 
     const newChatMessage = new chatModel({
         chatuser,
@@ -54,6 +56,7 @@ const getChatMessage = (req, res) => {
         })
         .sort({ createdAt: 1 })  
         .then((result) => {
+            // console.log(result);
             res.status(200).json(result);
         })
         .catch((err) => {

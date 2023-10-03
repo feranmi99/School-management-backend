@@ -75,25 +75,25 @@ const dataFunction = (req, res) => {
     userModel.findOne({ email })
         .then((result) => {
             if (!result) {
-                return res.status(404).json({ message: 'User not found' });
+                return res.status(404).json({ message: 'User not found !!!' });
             }
 
             result.validatepassword(password, (err, isMatch) => {
                 if (err) {
                     console.log(err);
-                    return res.status(500).json({ message: 'Internal server error' });
+                    return res.status(500).json({ message: 'Internal server error !!!' });
                 }
 
                 if (isMatch) {
                     res.status(200).json( { message: '✔ Sign up successfully',result});
                 } else {
-                    res.status(401).json({ message: 'Authentication failed' });
+                    res.status(401).json({ message: 'Authentication failed !!!' });
                 }
             });
         })
         .catch((err) => {
             console.log(err);
-            res.status(500).json({ message: 'Internal server error' });
+            res.status(500).json({ message: 'Internal server error !!!' });
         });
 };
 
