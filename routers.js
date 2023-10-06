@@ -11,7 +11,7 @@ router.use(express.json());
 router.post('/signup', todoFunction);
 router.post('/login' , dataFunction);
 router.post('/profilepic' ,profilepic );
-router.get('/getPost/:_id', getFunction);
+router.get('/getPost/', getFunction);
 router.get('/profile/:_id', getProfile);
 router.post('/attendance', postAttendan);
 router.get('/getattendance', getattendance);
