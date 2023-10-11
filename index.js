@@ -4,20 +4,20 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const { Server } = require("socket.io"); // Update this import
+const http = require("http"); // Add this import
 const router = require('./routers');
-const socketClient = require('socket.io');
+
 dotenv.config();
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
-
 app.use(express.json({ limit: "50mb" }));
 
 let port = process.env.PORT;
 let URI = process.env.MONGO_URI;
 
 app.use('/', router);
-
 
 mongoose.connect(URI)
     .then(() => {
@@ -27,23 +27,26 @@ mongoose.connect(URI)
         console.log(err);
     });
 
-const connection = app.listen(port, () => {
-    console.log(`server is running on port ${port}`);
+const server = http.createServer(app); // Create an HTTP server
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+    },
 });
 
-
-const io = socketClient(connection, {
-    cors: { origin: "*" }
-})
 io.on('connection', (socket) => {
     // console.log(`User connected (Socket ID: ${socket.id})`);
     socket.on('sendMsg', (message) => {
         console.log(`Received message: ${message}`);
-        io.emit('broadcastMsg',message)
-    })
+        io.emit('broadcastMsg', message);
+    });
     // Handle disconnections (commented out)
     // socket.on('disconnect', () => {
     //   console.log(`User disconnected (Socket ID: ${socket.id})`);
     // });
-})
+});
 
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
