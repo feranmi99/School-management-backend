@@ -4,8 +4,8 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const { Server } = require("socket.io"); // Update this import
-const http = require("http"); // Add this import
+const { Server } = require("socket.io"); 
+const http = require("http"); 
 const router = require('./routers');
 
 dotenv.config();
@@ -27,7 +27,7 @@ mongoose.connect(URI)
         console.log(err);
     });
 
-const server = http.createServer(app); // Create an HTTP server
+const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "*",
