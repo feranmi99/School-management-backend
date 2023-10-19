@@ -65,7 +65,7 @@ const todoFunction = (req, res) => {
 
 
 const dataFunction = (req, res) => {
-    const SECRET = process.env.SECRET
+    const SECRET = 'SECRET'
     const { email, password } = req.body;
     console.log(email)
     userModel.findOne({ email })
