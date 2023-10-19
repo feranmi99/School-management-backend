@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
     });
     // Handle disconnections (commented out)
     // socket.on('disconnect', () => {
-    //   console.log(`User disconnected (Socket ID: ${socket.id})`);
+    //   console.log(`User has disconnected (Socket ID: ${socket.id})`);
     // });
 });
 
