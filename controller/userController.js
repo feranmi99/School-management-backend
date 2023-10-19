@@ -65,6 +65,7 @@ const todoFunction = (req, res) => {
 
 
 const dataFunction = (req, res) => {
+    const SECRET = process.env.SECRET
     const { email, password } = req.body;
     console.log(email)
     userModel.findOne({ email })
@@ -80,7 +81,7 @@ const dataFunction = (req, res) => {
                 }
 
                 if (isMatch) {
-                    const token = jwt.sign({ email }, process.env.SECRET, { expiresIn: "6h" })
+                    const token = jwt.sign({ email }, SECRET, { expiresIn: "6h" })
                     res.status(200).json({ message: '✔ Sign up successfully', result, token });
                 } else {
                     res.status(401).json({ message: 'Authentication failed !!!' });
