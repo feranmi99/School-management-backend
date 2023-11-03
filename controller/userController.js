@@ -1,11 +1,18 @@
 const userModel = require("../model/userModel");
 const cloudinary = require('cloudinary');
+const dotenv = require("dotenv");
 const jwt = require('jsonwebtoken');
+dotenv.config();
+
+const cloud_name = process.env.CLOUD_NAME;
+const api_key = process.env.API_KEY;
+const api_secret = process.env.API_SECRET;
+const SECRET = process.env.SECRET;
 
 cloudinary.config({
-    cloud_name: 'dvq4xeg1s',
-    api_key: '973981513565751',
-    api_secret: 'P6_z1xe7VMGnaUmSDL1YC2nlt7A'
+    cloud_name: cloud_name,
+    api_key: api_key,
+    api_secret: api_secret
 });
 const todoFunction = (req, res) => {
     const { firstname, lastname, email, password, gender, address, nationality, phonenumber, stateoforigin, courses, department, level, matrinumber, condition } = req.body;
@@ -38,34 +45,8 @@ const todoFunction = (req, res) => {
         })
 };
 
-// const home = (req, res) => {
-// res.status(200).json({ messa })
-// res.send('king titus')
-//     let { password } = req.body 
-//     userModel.findOne({
-//         email: req.body.email,
-//         password: req.body.password
-//     })
-//         .then((result) => {
-//             // console.log(result);
-//             if (result) {
-//                 result.validatepassword(password, () => {
-
-//                 })
-//                 res.status(200).json(result)
-//             } else {
-
-//             }
-
-//         })
-//         .catch((err) => {
-//             console.log(err); 
-//         })
-// }
-
 
 const dataFunction = (req, res) => {
-    const SECRET = 'SECRET'
     const { email, password } = req.body;
     console.log(email)
     userModel.findOne({ email })
@@ -96,10 +77,11 @@ const dataFunction = (req, res) => {
 
 
 const getFunction = (req, res) => {
-    // const { token2 } = req.params;
+    // const token = req.headers.authorization
+    // console.log(token);
     // console.log(req.headers.authorization.split(' ')[1]);
     const token = req.headers.authorization.split(' ')[1];
-    jwt.verify(token, process.env.SECRET, (err, result) => {
+    jwt.verify(token, SECRET, (err, result) => {
         if (err) {
             console.log(err);
         } else {
@@ -117,8 +99,6 @@ const getFunction = (req, res) => {
     })
 }
 
-
-
 const getProfile = (req, res) => {
     const { _id } = req.params;
     // console.log(_id);
@@ -131,22 +111,6 @@ const getProfile = (req, res) => {
             console.log(err);
         })
 }
-
-// const profilepic = (req, res) => {
-//     let myfile = req.body.myfile;
-//     let id = req.body._id
-//     console.log(id);
-//     cloudinary.v2.uploader.upload(myfile, { public_id: id }
-//     ).then((result) => {
-//         console.log(result);
-//         console.log(result.secure_url)
-//         userModel.updateOne({ _id: id }, { $set: { profilepicture: result.secure_url } }).then(result => {
-//             console.log(result);
-//         })
-//     }).catch((error) => {
-//         console.log(error);
-//     })
-// }
 
 
 const profilepic = (req, res) => {
@@ -173,6 +137,8 @@ const profilepic = (req, res) => {
             res.status(500).json({ error: "An error occurred while uploading the profile picture." });
         });
 };
+const home = (req,res) => {
+    res.send( {message: 'welcome to Edu protal pro', status:true} )
+}
 
-
-module.exports = { todoFunction, getFunction, dataFunction, getProfile, profilepic, };
+module.exports = { todoFunction, getFunction, dataFunction, getProfile, profilepic,home };
