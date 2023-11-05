@@ -48,8 +48,6 @@ const todoFunction = (req, res) => {
 
 const dataFunction = (req, res) => {
     const { email, password } = req.body;
-    const SECRETKEY = 'titus'
-    console.log(SECRETKEY);
     console.log(email)
     userModel.findOne({ email })
         .then((result) => {
@@ -64,7 +62,7 @@ const dataFunction = (req, res) => {
                 }
 
                 if (isMatch) {
-                    const token = jwt.sign({ email }, SECRETKEY, { expiresIn: "6h" })
+                    const token = jwt.sign({ email }, SECRET, { expiresIn: "6h" })
                     res.status(200).json({ message: '✔ Sign up successfully', result, token });
                 } else {
                     res.status(401).json({ message: 'Authentication failed !!!' });
