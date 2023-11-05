@@ -48,6 +48,7 @@ const todoFunction = (req, res) => {
 
 const dataFunction = (req, res) => {
     const { email, password } = req.body;
+    console.log(SECRET);
     console.log(email)
     userModel.findOne({ email })
         .then((result) => {
