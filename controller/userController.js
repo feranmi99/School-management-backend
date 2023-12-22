@@ -87,7 +87,7 @@ const getFunction = (req, res) => {
         } else {
             console.log(result);
             let email = result.email;
-            userModel.find({ email })
+            userModel.findOne({ email })
                 .then((result) => {
                     res.status(200).json(result);
                     console.log(result);
