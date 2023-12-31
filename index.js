@@ -6,7 +6,9 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const { Server } = require("socket.io"); 
 const http = require("http"); 
-const router = require('./routers');
+// const router = require('./routers');
+const studentRouter = require('./allRouters/studentRouter')
+// const staffRouter = require('./allRouters/staffRouter');
 
 dotenv.config();
 
@@ -17,7 +19,9 @@ app.use(express.json({ limit: "50mb" }));
 let port = process.env.PORT;
 let URI = process.env.MONGO_URI;
 
-app.use('/', router);
+// app.use('/', router);
+app.use('/student', studentRouter)
+// app.use('/staff', staffRouter)
 
 mongoose.connect(URI)
     .then(() => {
@@ -34,6 +38,7 @@ const io = new Server(server, {
         methods: ["GET", "POST"],
     },
 });
+
 
 io.on('connection', (socket) => {
     // console.log(`User connected (Socket ID: ${socket.id})`);
