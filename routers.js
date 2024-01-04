@@ -1,5 +1,5 @@
 const express = require('express');
-const { todoFunction, getFunction, getProfile, dataFunction, profilepic, home,  } = require('./controller/userController');
+// const { todoFunction, getFunction, getProfile, dataFunction, profilepic, home,  } = require('./controller/userController');
 const { getattendance , postAttendan } = require('./controller/attendController');
 const { chatList, mainChat, sentChatMessage, getChatMessage } = require('./controller/chatController');
 const { posttimetable, gettimetable, postodo, gettodo } = require('./controller/timetableController');
@@ -7,14 +7,8 @@ const { posttimetable, gettimetable, postodo, gettodo } = require('./controller/
 const router = express.Router();
 
 router.use(express.json());
-router.get('/', home)
-router.post('/signup', todoFunction);
-router.post('/login' , dataFunction);
-router.post('/profilepic' ,profilepic );
-router.get('/getPost', getFunction);
-router.get('/profile/:_id', getProfile);
 router.post('/attendance', postAttendan);
-router.get('/getattendance', getattendance);
+// router.get('/getattendance', getattendance);
 router.get('/getChatUser', chatList);
 router.get('/myChat/:_id', mainChat);
 router.post('/updatedChatMessage/:from/:_id' ,sentChatMessage );

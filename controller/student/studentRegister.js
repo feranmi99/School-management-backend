@@ -155,4 +155,32 @@ const studentLogin = (req, res) => {
         });
 };
 
-module.exports = { studentSignup, studentLogin };
+
+const studentAuth = (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    jwt.verify(token, SECRET, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            let email = result.email;
+            studentModel.findOne({ email })
+                .then((result) => {
+                    res.status(200).json({
+                        result: result,
+                        message: 'good' ,
+                        status: true,
+                    });
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        result: err,
+                        message: 'token expire' ,
+                        status: false,
+                    });
+                    console.log(err);
+                })
+        }
+    })
+};
+
+module.exports = { studentSignup, studentLogin, studentAuth };

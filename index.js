@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 const { Server } = require("socket.io"); 
 const http = require("http"); 
 // const router = require('./routers');
-const studentRouter = require('./allRouters/studentRouter')
+const studentRouter = require('./Routers/studentRouter')
 // const staffRouter = require('./allRouters/staffRouter');
 
 dotenv.config();
@@ -39,6 +39,9 @@ const io = new Server(server, {
     },
 });
 
+app.get("/", (req,res)=>{
+    res.send( {message: 'welcome to Edu protal pro', status:true} )
+})
 
 io.on('connection', (socket) => {
     // console.log(`User connected (Socket ID: ${socket.id})`);
