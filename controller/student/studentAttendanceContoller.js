@@ -1,29 +1,31 @@
 const studentModel = require("../../model/student/studentModel");
 const studentAttendce = require('../../model/student/studentAttendanceModel')
 
-const studentAttendcePost = (req,res)=> {
-    const { fullname, matricnumber, department, level } = req.body;
+const studentAttendancePost = async (req, res) => {
     console.log(req.body);
-    // let info = req.body;
-    // let form = new studentAttendce(info);
-    // form.save()
-    // .then((resuit)=> {
-    //     res.status(200).json(resuit);
-    // }).catch((err)=> {
-    //     console.log(err);
-    // })
+    // try {
+    //     const { fullname, matricnumber, department, level } = req.body;
+    //     console.log(req.body);
 
+    //     const newAttendance = new studentAttendce({ fullname, matricnumber, department, level });
+    //     const result = await newAttendance.save();
+
+    //     res.status(200).json(result);
+    // } catch (error) {
+    //     console.error(error);
+    //     res.status(500).json({ error: 'Internal Server Error' });
+    // }
 };
 
-const studentAttendceGet =  (req,res) => {
-    studentAttendce.find({})
-    .then((resuit)=>{
-        console.log(resuit);
-        res.status(200).json(resuit)
-    }).catch((err)=>{
-        console.log(err);
-    })
-
+const studentAttendanceGet = async (req, res) => {
+    try {
+        const result = await studentAttendce.find({});
+        console.log(result);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
-module.exports = { studentAttendcePost , studentAttendceGet }
+module.exports = { studentAttendancePost , studentAttendanceGet }
