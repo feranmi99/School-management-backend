@@ -156,7 +156,7 @@ const studentLogin = (req, res) => {
 };
 
 
-const studentAuth = (req, res) => {
+const studentAuth = async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     jwt.verify(token, SECRET, (err, result) => {
         if (err) {
