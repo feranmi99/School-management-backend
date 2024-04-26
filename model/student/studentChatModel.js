@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const studentShatSchema = new mongoose.Schema({
+const studentChatSchema = new mongoose.Schema({
     chatuser:{
         type:Array,
         require:true
@@ -15,6 +15,6 @@ const studentShatSchema = new mongoose.Schema({
     },
 },{timestamps:true});
 
-const studentChatModel = mongoose.model('studentShatSchema', studentShatSchema);
+const studentChatModel = mongoose.model('studentChat', studentChatSchema);
 
 module.exports = studentChatModel;

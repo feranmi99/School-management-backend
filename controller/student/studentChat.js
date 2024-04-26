@@ -12,7 +12,7 @@ const getStudentMessageList = (req, res) => {
     }
 
     studentChatModel
-        .find({ chatuser: { $all: [from, to] } })
+        .find({ chatuser: { $all: [from, otherUserId] } })
         .then((result) => {
             return res.status(200).json({
                 message: "Get Chat successful",
@@ -29,31 +29,42 @@ const getStudentMessageList = (req, res) => {
         });
 };
 
-const sendStudentMessage = (req, res) => {
-    const { message, from, to } = req.body;
-
-    if (!message || !from || !to) {
-        return res.json({ code: 105, msg: "Missing required parameters" });
+const sendStudentMessage = async (req, res) => {
+    const { userId, friendId } = req.params;
+    const { chatuser, sender, message } = req.body;
+    console.log(req.params);
+    console.log(req.body);
+    // await studentChatModel.deleteMany()
+    if (!chatuser || !sender || !message) {
+        console.log('Missing required parameters');
+        return res.status(500).json({
+            status: false,
+            message: "Missing required parameters",
+        });
     }
 
-    studentChatModel.create(
-        {
-            message: message,
-            from: from,
-            to: to,
-        },
-        function (err, doc) {
-            if (err) {
-                return res.json({ code: 500, msg: "Server error" });
-            }
+    const newChatMessage = new studentChatModel({
+        chatuser,
+        sender,
+        message,
+    });
 
-            return res.json({
-                code: 200,
-                msg: "Message sent successfully",
-                data: doc,
+    newChatMessage.save()
+        .then((result) => {
+            console.log(result);
+            return res.status(200).json({
+                status: true,
+                message: "Message sent successfully",
+                result: result,
             });
-        }
-    );
+        }).catch((err) => {
+            console.error(err);
+            return res.status(500).json({
+                status: false,
+                message: "Error sending message",
+                result: err,
+            });
+        });
 };
 
 const getAllUser = (req, res) => {
@@ -65,8 +76,7 @@ const getAllUser = (req, res) => {
                 result: result,
                 status: true,
             });
-        })
-        .catch((err) => {
+        }).catch((err) => {
             console.log(err);
             return res.status(500).json({
                 message: "Unable to Get Message",
@@ -75,4 +85,4 @@ const getAllUser = (req, res) => {
         });
 };
 
-module.exports = { getAllUser, getStudentMessageList };
+module.exports = { getAllUser, getStudentMessageList, sendStudentMessage };

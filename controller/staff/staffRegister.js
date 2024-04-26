@@ -1,4 +1,4 @@
-const studentModel = require("../../model/student/studentModel");
+const staffModel = require("../../model/staff/staffModel");
 const axios = require('axios');
 
 const emailValidationAPIKey = '3d6c86703a414f868782f6316269f1fb';
@@ -10,7 +10,7 @@ dotenv.config();
 
 const SECRET = process.env.SECRET;
 
-const studentSignup = async (req, res) => {
+const staffSignup = async (req, res) => {
     const {
         firstname,
         lastname,
@@ -21,49 +21,41 @@ const studentSignup = async (req, res) => {
         nationality,
         phonenumber,
         stateoforigin,
-        courses,
-        department,
-        level,
-        matrinumber,
         condition,
         city
     } = req.body;
 
-    if (!firstname || !lastname || !email || !password || !gender || !phonenumber || !courses || !department || !level || !matrinumber || !condition || !city) {
-        return res.status(500).json({
+    if (!firstname || !lastname || !email || !password || !gender || !phonenumber || !condition || !city) {
+        return res.status(400).json({
             message: 'Incomplete or invalid data. Please provide all required fields.',
             status: false,
         });
     };
 
     try {
-        const existingUser = await studentModel.findOne({ email });
+        const existingUser = await staffModel.findOne({ email });
         if (existingUser) {
             return res.status(500).json({
                 message: 'Email already exists. Please use a different email address.',
                 status: false,
             });
         };
-        const emailValidationResponse = await axios.get(`https://emailvalidation.abstractapi.com/v1/?api_key=${emailValidationAPIKey}&email=${email}`);
-        if (emailValidationResponse.data.deliverability === 'DELIVERABLE') {
-            const phoneValidationResponse = await axios.get(`https://phonevalidation.abstractapi.com/v1/?api_key=${phoneValidationAPIKey}&phone=${phonenumber}`);
-            if (phoneValidationResponse.data.valid == true) {
+        // const emailValidationResponse = await axios.get(`https://emailvalidation.abstractapi.com/v1/?api_key=${emailValidationAPIKey}&email=${email}`);
+        // if (emailValidationResponse.data.deliverability === 'DELIVERABLE') {
+        //     const phoneValidationResponse = await axios.get(`https://phonevalidation.abstractapi.com/v1/?api_key=${phoneValidationAPIKey}&phone=${phonenumber}`);
+        //     if (phoneValidationResponse.data.valid == true) {
 
-                const newUser = new studentModel({
+                const newUser = new staffModel({
                     firstname,
                     lastname,
                     email,
                     password,
                     gender,
                     phonenumber,
-                    courses,
-                    department,
                     city,
-                    level,
                     nationality,
                     stateoforigin,
                     address,
-                    matrinumber,
                     condition,
                 });
 
@@ -83,20 +75,20 @@ const studentSignup = async (req, res) => {
                         });
                     });
 
-            } else {
-                // Handle invalid phone number
-                return res.status(500).json({
-                    message: 'Invalid phone number.',
-                    status: false,
-                });
-            }
-        } else {
-            // Handle invalid email
-            return res.status(500).json({
-                message: 'Invalid email address.',
-                status: false,
-            });
-        }
+        //     } else {
+        //         // Handle invalid phone number
+        //         return res.status(400).json({
+        //             message: 'Invalid phone number.',
+        //             status: false,
+        //         });
+        //     }
+        // } else {
+        //     // Handle invalid email
+        //     return res.status(400).json({
+        //         message: 'Invalid email address.',
+        //         status: false,
+        //     });
+        // }
 
     } catch (error) {
         console.log(error);
@@ -107,12 +99,10 @@ const studentSignup = async (req, res) => {
         });
     }
 }
-
-
-const studentLogin = (req, res) => {
+const staffLogin = (req, res) => {
     const { email, password } = req.body;
     console.log(email)
-    studentModel.findOne({ email })
+    staffModel.findOne({ email })
         .then((result) => {
             if (!result) {
                 return res.status(500).json({
@@ -156,7 +146,7 @@ const studentLogin = (req, res) => {
 };
 
 
-const studentAuth = async (req, res) => {
+const staffAuth = async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     jwt.verify(token, SECRET, (err, result) => {
         if (err) {
@@ -168,7 +158,7 @@ const studentAuth = async (req, res) => {
             console.log(err);
         } else {
             let email = result.email;
-            studentModel.findOne({ email })
+            staffModel.findOne({ email })
                 .then((result) => {
                     res.status(200).json({
                         result: result,
@@ -188,4 +178,6 @@ const studentAuth = async (req, res) => {
     })
 };
 
-module.exports = { studentSignup, studentLogin, studentAuth };
+
+
+module.exports = { staffSignup, staffAuth, staffLogin }

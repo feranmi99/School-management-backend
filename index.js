@@ -8,7 +8,7 @@ const { Server } = require("socket.io");
 const http = require("http"); 
 // const router = require('./routers');
 const studentRouter = require('./Routers/studentRouter')
-// const staffRouter = require('./allRouters/staffRouter');
+const staffRouter = require('./Routers/staffRouter');
 
 dotenv.config();
 
@@ -19,9 +19,8 @@ app.use(express.json({ limit: "50mb" }));
 let port = process.env.PORT;
 let URI = process.env.MONGO_URI;
 
-// app.use('/', router);
 app.use('/student', studentRouter)
-// app.use('/staff', staffRouter)
+app.use('/staff', staffRouter)
 
 mongoose.connect(URI)
     .then(() => {
